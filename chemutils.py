@@ -1,23 +1,11 @@
 import os
-from collections import defaultdict
-from operator import le
 from typing import List, Tuple
 
-# from vocab import Vocab
 import numpy as np
-import pandas as pd
-import rdkit
 import rdkit.Chem as Chem
 import torch
-from numpy.core.fromnumeric import shape
-from rdkit.Chem import AllChem, Descriptors
-from rdkit.Chem.EnumerateStereoisomers import (
-    EnumerateStereoisomers,
-    StereoEnumerationOptions,
-)
+from rdkit.Chem import Descriptors
 from rdkit.Chem.QED import qed
-from scipy.sparse import coo, csr_matrix
-from scipy.sparse.csgraph import minimum_spanning_tree
 
 MST_MAX_WEIGHT = 100
 MAX_NCAND = 2000
@@ -316,7 +304,7 @@ class ProteinPocket:
                     if str(line[22:27]).strip() == index and line[21] == chain
                 ]
                 self.pocket_residues.append(Residue(residue_content))
-            except:
+            except Exception:
                 continue
 
 
@@ -359,7 +347,7 @@ class ComplexPocket:
                     if str(line[22:27]).strip() == index and line[21] == chain
                 ]
                 self.pocket_residues.append(Residue(residue_content))
-            except:
+            except Exception:
                 continue
 
         self.pro_lig_interaction = self.get_interaction_label()
@@ -536,7 +524,7 @@ def random_ligand_decoy(protein_pockets, decoy_flag):
             for i, complex_label in enumerate(complex_labels):
                 if (
                     complex_label == 1 and protein_pockets[i].pK != 0
-                ):  ###when complex and  has pK data
+                ):  # when complex and  has pK data
                     pK_flags[i] = 1
 
             if np.sum(pK_flags) > 0 and np.sum(complex_labels) > 0:
@@ -545,7 +533,7 @@ def random_ligand_decoy(protein_pockets, decoy_flag):
         complex_labels = np.ones(len(protein_pockets))
         pK_flags = np.ones(len(protein_pockets))
 
-    mol_batch = []  ##self-designed class Mol
+    mol_batch = []  # self-designed class Mol
     for i, complex_label in enumerate(complex_labels):
         if complex_label == 1:
             mol_batch.append(

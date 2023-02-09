@@ -1,13 +1,10 @@
 import math
-import sys
-from asyncio import coroutines
-from venv import create
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from nnutils import create_var, index_select_ND
+from nnutils import index_select_ND
 
 
 class ProteinGAT(nn.Module):
@@ -77,7 +74,7 @@ class ProteinGAT(nn.Module):
             attention_matrix = attention_matrix + res_mask  # [h,n,n]
             attention_matrix = torch.softmax(
                 attention_matrix, dim=-1
-            )  #  * distance_weight #[h,n,n]
+            )  # * distance_weight #[h,n,n]
             # attention_matrix = (attention_matrix + torch.transpose(attention_matrix,-2,-1)) / 2. #[h,n,n]
             # attention_matrix = attention_matrix / torch.sum(attention_matrix,dim=-1,keepdim=True)  #normalize to 1
             v = torch.matmul(attention_matrix, v).permute(
@@ -356,7 +353,7 @@ class ProteinEGNN(nn.Module):
             # coordinates = torch.cat(coordinates_new,dim=0)
         return fresidues
 
-    ###for speeding screening
+    # for speeding screening
     def pre_cal_res_features(self, fresidues, coordinates):
         fresidues = self.res_embedding(fresidues)
         for _ in range(self.update_iters):

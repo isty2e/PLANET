@@ -1,13 +1,9 @@
 import argparse
-import math
-import os
 import pickle
 
 import numpy as np
-import rdkit
 import scipy.stats as stats
 import torch
-import torch.nn as nn
 from torch.utils.data import DataLoader
 
 from PLANET_datautils import ProLigDataset

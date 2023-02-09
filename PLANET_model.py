@@ -1,14 +1,13 @@
-import math
 import os
 import sys
 
 import torch
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import torch.nn as nn
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from layers import LigandGAT, ProLig, ProteinEGNN
-from nnutils import create_var, create_var_gpu
+from nnutils import create_var
 
 
 class PLANET(nn.Module):
@@ -38,7 +37,7 @@ class PLANET(nn.Module):
         self.pro_lig_interaction_loss = nn.BCELoss(reduction="sum")
         self.mse_loss = nn.MSELoss(reduction="none")
 
-    ###used for model training
+    # used for model training
     def forward(self, res_batch, mol_batch):
         (fresidues, res_map, res_scope, alpha_coordinates) = res_batch
         fresidues = fresidues.to(self.device)
@@ -147,7 +146,7 @@ class PLANET(nn.Module):
     def load_parameters(self, parameters=os.path.join("PLANET", "PLANET.iter-205000")):
         self.load_state_dict(torch.load(parameters, map_location=self.device))
 
-    ###used for screening (only one protein, different mols)
+    # used for screening (only one protein, different mols)
     def cal_res_features_helper(self, fresidues, coordinates):
         fresidues = fresidues.to(self.device)
         coordinates = coordinates.to(self.device)

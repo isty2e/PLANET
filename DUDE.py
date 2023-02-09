@@ -1,18 +1,15 @@
 import argparse
 import math
 import os
-import pickle
-from operator import index
 
 import numpy as np
 import pandas as pd
-import rdkit
 import rdkit.Chem as Chem
 import torch
 from sklearn.metrics import roc_auc_score
 from torch.utils.data import DataLoader, Dataset
 
-from chemutils import ProteinPocket, mol_batch_to_graph, tensorize_protein_pocket
+from chemutils import ProteinPocket, mol_batch_to_graph
 from PLANET_model import PLANET
 
 
@@ -42,7 +39,7 @@ class VirtualScreening_Dataset(Dataset):
             try:
                 Chem.SanitizeMol(mol)
                 index_list.append(i)
-            except:
+            except Exception:
                 continue
 
         index_list = [i for i in index_list if self.sdf_supp[i] is not None]

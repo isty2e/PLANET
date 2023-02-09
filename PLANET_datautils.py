@@ -2,17 +2,15 @@ import argparse
 import os
 import pickle
 import random
-import sys
 from itertools import chain
 from typing import List
 
 import numpy as np
 import pandas as pd
-import rdkit
 from rdkit import Chem
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 
-from chemutils import ComplexPocket, role_of_5, tensorize_all
+from chemutils import ComplexPocket, tensorize_all
 
 
 class ProLigDataset(Dataset):
@@ -121,7 +119,7 @@ if __name__ == "__main__":
                     # if pocket.distance_matrix.shape[0] == 0:
                     # print(pdb_code)
                     # os.system('cp -r /disk1/aquila/PDBbind2020/{}/ /disk1/aquila/test_PDBbind'.format(pdb_code))
-                    ###for PDBbind_extend which is not checked,some ligands may not in a 'pocket'
+                    # for PDBbind_extend which is not checked,some ligands may not in a 'pocket'
                 if sub_folder == "extend" and len(pocket.pocket_residues) >= 30:
                     try:
                         ligand_mol = pocket.ligand.mol
@@ -138,7 +136,7 @@ if __name__ == "__main__":
                                 pK,
                             ]
                         )
-                    except:
+                    except Exception:
                         continue
                 elif sub_folder == "extend" and len(pocket.pocket_residues) < 30:
                     continue

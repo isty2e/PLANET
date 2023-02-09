@@ -1,17 +1,13 @@
 import argparse
-import math
-import os
-import pickle
 import sys
 
 import numpy as np
-import rdkit
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler
 from rdkit import RDLogger
-from torch.utils.data import DataLoader, RandomSampler
+from torch.utils.data import DataLoader
 
 from PLANET_datautils import ProLigDataset
 from PLANET_model import PLANET
@@ -257,7 +253,7 @@ if __name__ == "__main__":
                                     affinity_mae.item(),
                                 ]
                             )
-                        except:
+                        except Exception:
                             continue
                     valid_meters /= valid_batch_count
                     print(
@@ -307,7 +303,7 @@ if __name__ == "__main__":
                                     affinity_mae.item(),
                                 ]
                             )
-                        except:
+                        except Exception:
                             continue
                     test_meters /= test_batch_count
                     print(

@@ -2,11 +2,7 @@ import argparse
 import json
 import os
 import pickle
-import random
 from multiprocessing import Pool
-
-from rdkit import Chem
-from rdkit.RDLogger import ERROR
 
 from chemutils import ComplexPocket
 
@@ -29,7 +25,7 @@ def process_PDBBind(record_dir):
         pocket_pkl = os.path.join(record_dir, "{}_pocket.pkl".format(pdb_name))
         with open(pocket_pkl, "wb") as f:
             pickle.dump(pocket, f, pickle.HIGHEST_PROTOCOL)
-    except Exception as e:
+    except Exception:
         pass
         # print(pdb_name)
         # os.system('cp -r /disk1/aquila/PDBbind2020_all/origin/{}/ /disk1/aquila/PDBbind2020_repair/'.format(pdb_name))
