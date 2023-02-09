@@ -1,0 +1,17 @@
+name: planet
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - black
+  - isort
+  - ipython
+  - numpy
+  - scipy
+  - pandas
+  - scikit-learn
+  - rdkit
+  - cudatoolkit=11.2
+  - pytorch::pytorch
